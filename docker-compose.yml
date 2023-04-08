@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  logging-service:
+    image: openjdk:17.0.2-jdk-slim
+    command:
+      - /bin/bash
+      - -c
+      - |
+        chmod -R 777 .
+        ./gradlew bootRun
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    environment:
+      - JAVA_OPTS=-Xmx512m
+    volumes:
+      - .:/app
+    working_dir: /app
+    restart: unless-stopped

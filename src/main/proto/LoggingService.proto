@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package net.villenium.logging;
+
+import "google/protobuf/empty.proto";
+
+service LoggingService {
+  rpc logMessage(MessageRequest) returns (google.protobuf.Empty);
+}
+
+message MessageRequest {
+  string message = 1;
+  string channel = 2;
+  repeated int64 roles = 3;
+}
