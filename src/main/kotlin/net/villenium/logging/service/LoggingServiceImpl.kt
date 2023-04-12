@@ -46,7 +46,7 @@ class LoggingServiceImpl(
                 }
                 action.complete()
             }
-        channel.sendMessage(request.message).queue()
+        channel.sendMessage(request.message.replace('\'', '`')).queue()
 
         Streams.write(responseObserver, EMPTY)
     }
