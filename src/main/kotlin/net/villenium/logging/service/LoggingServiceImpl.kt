@@ -10,6 +10,9 @@ import net.dv8tion.jda.api.entities.TextChannel
 import net.villenium.grpc.stream.Streams
 import net.villenium.logging.LoggingServiceGrpc.LoggingServiceImplBase
 import net.villenium.logging.LoggingServiceOuterClass
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
 import kotlin.jvm.optionals.getOrElse
 
 class LoggingServiceImpl(
@@ -46,7 +49,13 @@ class LoggingServiceImpl(
                 }
                 action.complete()
             }
-        channel.sendMessage(request.message.replace('\'', '`')).queue()
+
+        val time: String = SimpleDateFormat("HH:mm:ss").format(Date.from(Instant.now()))
+        channel.sendMessage(
+            "`%s` ${request.message}"
+                .replace('\'', '`')
+                .format(time)
+        ).queue()
 
         Streams.write(responseObserver, EMPTY)
     }
